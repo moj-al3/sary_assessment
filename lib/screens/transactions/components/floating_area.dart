@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/providers/transactions_provider.dart';
 
 class FloatingArea extends StatelessWidget {
   const FloatingArea({
@@ -34,7 +36,8 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_down.svg",
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed:
+                    Provider.of<TransactionsProvider>(context).popTransaction,
               ),
             ),
           ],

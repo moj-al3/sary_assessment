@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:sary_assessment/constants.dart';
-import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/screens/items/components/components.dart';
 
 class ItemsScreen extends StatelessWidget {
@@ -32,12 +30,10 @@ class ItemsScreen extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: Consumer<ItemsProvider>(
-                  builder: (context, itemsProvider, child) => ListView.builder(
-                    itemCount: itemsProvider.items.length,
-                    itemBuilder: (context, index) => ItemCard(
-                      item: itemsProvider.items[index],
-                    ),
+                child: ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) => ItemCard(
+                    item: items[index],
                   ),
                 ),
               )
