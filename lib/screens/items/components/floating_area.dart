@@ -24,8 +24,16 @@ class FloatingArea extends StatelessWidget {
                   Icons.add,
                   color: Colors.white,
                 ),
-                onPressed:
-                    Provider.of<ItemsProvider>(context, listen: false).popItem,
+                onPressed: () async {
+                  await Provider.of<ItemsProvider>(context, listen: false)
+                      .addItem(
+                    name: "Afia Corn Oil",
+                    price: 12.13,
+                    sku: "PRO-SA2",
+                    description: "6 x 320 ml",
+                    imagePath: "assets/images/Afia.png",
+                  );
+                },
               ),
             ),
           ],

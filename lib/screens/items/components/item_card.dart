@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/models/item.dart';
+import 'package:sary_assessment/providers/items_provider.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -15,7 +17,10 @@ class ItemCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: CustomCard(
-        onTap: () {},
+        onTap: () async {
+          await Provider.of<ItemsProvider>(context, listen: false)
+              .deleteItem(item.id);
+        },
         child: Row(
           children: [
             Image.asset(item.image),

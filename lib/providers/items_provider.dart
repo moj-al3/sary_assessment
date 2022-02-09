@@ -1,63 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:sary_assessment/models/item.dart';
 
 class ItemsProvider with ChangeNotifier {
-  final List<Item> _items = [
-    Item(
-      id: 1,
+  final box = Hive.box("itemsBox");
+  List<Item> get items => box.values.toList().cast();
+  Future<void> addItem({
+    required String name,
+    required String sku,
+    required String description,
+    required String imagePath,
+    required double price,
+  }) async {
+    //add dummy data to reserve a key to be used for the item as id
+    int id = await box.add("");
+    Item item = Item(
+      id: id,
       name: "Barbican Beer Drink",
       price: 92.61,
       sku: "PRO-SA1",
       description: "320 x 6 ml",
       image: "assets/images/Barbican.png",
-    ),
-    Item(
-      id: 2,
-      name: "Afia Corn Oil",
-      price: 12.13,
-      sku: "PRO-SA2",
-      description: "6 x 320 ml",
-      image: "assets/images/Afia.png",
-    ),
-    Item(
-      id: 3,
-      name: "Pringles Barbeque Potato Chips",
-      price: 100.25,
-      sku: "PRO-SA3",
-      description: "165 GM x 19",
-      image: "assets/images/Pringles.png",
-    ),
-    Item(
-      id: 4,
-      name: "Barbican Beer Drink",
-      price: 92.61,
-      sku: "PRO-SA4",
-      description: "320 x 6 ml",
-      image: "assets/images/Barbican.png",
-    ),
-    Item(
-      id: 5,
-      name: "Afia Corn Oil",
-      price: 12.13,
-      sku: "PRO-SA5",
-      description: "6 x 320 ml",
-      image: "assets/images/Afia.png",
-    ),
-    Item(
-      id: 6,
-      name: "Pringles Barbeque Potato Chips",
-      price: 100.25,
-      sku: "PRO-SA6",
-      description: "165 GM x 19",
-      image: "assets/images/Pringles.png",
-    ),
-  ];
+    );
+    await box.put(id, item);
+    notifyListeners();
+  }
 
-  List<Item> get items => [..._items];
+  Item? getItem(int id) {
+    return box.get(id);
+  }
 
-  void popItem() {
-    if (_items.isEmpty) return;
-    _items.removeLast();
+  Future<void> deleteItem(int id) async {
+    await box.delete(id);
+    notifyListeners();
+  }
+
+  Future<void> deleteAll() async {
+    await box.clear();
     notifyListeners();
   }
 }
