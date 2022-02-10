@@ -11,7 +11,7 @@ class AddItemDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    String name = "", description = "", sku = "", selectedImagePath = "";
+    String name = "", description = "", sku = "", selectedFileName = "";
     double price = 0;
     return Scaffold(
       appBar: AppBar(
@@ -23,15 +23,16 @@ class AddItemDialog extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if (_formKey.currentState!.validate() &&
-                  selectedImagePath.isNotEmpty) {
+                  selectedFileName.isNotEmpty) {
                 _formKey.currentState!.save();
                 await Provider.of<ItemsProvider>(context, listen: false)
                     .addItem(
-                        name: name,
-                        sku: sku,
-                        description: description,
-                        imagePath: selectedImagePath,
-                        price: price);
+                  name: name,
+                  sku: sku,
+                  description: description,
+                  imagePath: selectedFileName,
+                  price: price,
+                );
                 Navigator.pop(context);
               }
             },
@@ -46,8 +47,7 @@ class AddItemDialog extends StatelessWidget {
           child: Column(
             children: [
               CustomImageInput(
-                onImageSelect: (File newLogo) =>
-                    selectedImagePath = newLogo.path,
+                onImageSelect: (fileName) => selectedFileName = fileName,
               ),
               CustomTextFormField(
                 label: 'Sku',

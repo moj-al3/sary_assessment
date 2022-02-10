@@ -5,11 +5,11 @@ import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 import 'screens/transactions/transactions_screen.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  final appDocumentDir = await syspaths.getApplicationDocumentsDirectory();
   Hive
     ..init(appDocumentDir.path)
     ..registerAdapter(ItemAdapter());

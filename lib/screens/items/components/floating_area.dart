@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
-import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/screens/items/dialog/add_item_dialog.dart';
 
 class FloatingArea extends StatelessWidget {
