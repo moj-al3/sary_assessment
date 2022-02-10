@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
+import 'package:sary_assessment/screens/items/dialog/add_item_dialog.dart';
 
 class FloatingArea extends StatelessWidget {
   const FloatingArea({
@@ -25,13 +26,11 @@ class FloatingArea extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  await Provider.of<ItemsProvider>(context, listen: false)
-                      .addItem(
-                    name: "Afia Corn Oil",
-                    price: 12.13,
-                    sku: "PRO-SA2",
-                    description: "6 x 320 ml",
-                    imagePath: "assets/images/Afia.png",
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const AddItemDialog(),
+                        fullscreenDialog: true),
                   );
                 },
               ),

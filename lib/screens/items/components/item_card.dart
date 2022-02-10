@@ -23,7 +23,11 @@ class ItemCard extends StatelessWidget {
         },
         child: Row(
           children: [
-            Image.asset(item.image),
+            Image.asset(
+              item.image,
+              width: 125,
+              height: 75,
+            ),
             const SizedBox(
               width: 16,
             ),

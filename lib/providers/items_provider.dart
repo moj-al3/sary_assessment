@@ -16,12 +16,13 @@ class ItemsProvider with ChangeNotifier {
     int id = await box.add("");
     Item item = Item(
       id: id,
-      name: "Barbican Beer Drink",
-      price: 92.61,
-      sku: "PRO-SA1",
-      description: "320 x 6 ml",
-      image: "assets/images/Barbican.png",
+      name: name,
+      price: price,
+      sku: sku,
+      description: description,
+      image: imagePath,
     );
+
     await box.put(id, item);
     notifyListeners();
   }
