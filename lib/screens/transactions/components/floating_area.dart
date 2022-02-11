@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
+import 'package:sary_assessment/screens/transactions/dialog/add_transaction_dialog.dart';
 
 class FloatingArea extends StatelessWidget {
   const FloatingArea({
@@ -25,7 +27,15 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_up.svg",
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        const AddTransactionDialog(
+                      type: "outbound",
+                    ),
+                    fullscreenDialog: true,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 10),
@@ -36,8 +46,15 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_down.svg",
                   color: Colors.white,
                 ),
-                onPressed:
-                    Provider.of<TransactionsProvider>(context).popTransaction,
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        const AddTransactionDialog(
+                      type: "inbound",
+                    ),
+                    fullscreenDialog: true,
+                  ),
+                ),
               ),
             ),
           ],

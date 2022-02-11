@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/models/item.dart';
+import 'package:sary_assessment/models/transaction.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 import 'screens/transactions/transactions_screen.dart';
@@ -12,8 +13,10 @@ void main() async {
   final appDocumentDir = await syspaths.getApplicationDocumentsDirectory();
   Hive
     ..init(appDocumentDir.path)
-    ..registerAdapter(ItemAdapter());
+    ..registerAdapter(ItemAdapter())
+    ..registerAdapter(TransactionAdapter());
   await Hive.openBox("itemsBox");
+  await Hive.openBox("transactionsBox");
   runApp(const MyApp());
 }
 

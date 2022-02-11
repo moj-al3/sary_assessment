@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
 import 'badge.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class TransactionDetailsCard extends StatelessWidget {
   final Transaction transaction;
@@ -14,14 +17,11 @@ class TransactionDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Item item = items.firstWhere(
-      (element) => element.id == transaction.itemId,
-    );
     String stockStatus =
         transaction.type == "inbound" ? "Stock In" : "Stock Out";
     String stockIconPath = transaction.type == "inbound"
-        ? "assets/icons/arrow_up.svg"
-        : "assets/icons/arrow_down.svg";
+        ? "assets/icons/arrow_down.svg"
+        : "assets/icons/arrow_up.svg";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -33,7 +33,7 @@ class TransactionDetailsCard extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              ItemInfo(item: item),
+              ItemInfo(item: transaction.item),
               const SizedBox(
                 height: 16,
               ),
@@ -48,7 +48,7 @@ class TransactionDetailsCard extends StatelessWidget {
                   ),
                   Badge(
                     title: "Price",
-                    value: "${item.price} SR",
+                    value: "${transaction.item.price} SR",
                   ),
                   const Spacer(),
                   Row(
@@ -119,7 +119,20 @@ class ItemInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(item.image),
+        FutureBuilder<Directory>(
+          future: syspaths.getApplicationDocumentsDirectory(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Image.asset(
+                "${snapshot.data!.path}/${item.image}",
+                width: 125,
+                height: 75,
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
         const SizedBox(
           width: 16,
         ),

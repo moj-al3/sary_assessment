@@ -24,7 +24,7 @@ class _CustomImageInputState extends State<CustomImageInput> {
     selectedImage = File(imageFile.path);
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
-    final savedImage = await selectedImage!.copy('${appDir.path}/$fileName');
+    await selectedImage!.copy('${appDir.path}/$fileName');
     setState(() {});
     widget.onImageSelect(fileName);
   }

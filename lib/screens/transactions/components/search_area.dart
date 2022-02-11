@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sary_assessment/constants.dart';
+import 'package:sary_assessment/providers/transactions_provider.dart';
 
 class SearchArea extends StatelessWidget {
   const SearchArea({
@@ -36,7 +38,10 @@ class SearchArea extends StatelessWidget {
               width: 16,
             ),
             FilterButton(
-              onPressed: () {},
+              onPressed: () async {
+                await Provider.of<TransactionsProvider>(context, listen: false)
+                    .deleteAll();
+              },
             ),
           ],
         ),

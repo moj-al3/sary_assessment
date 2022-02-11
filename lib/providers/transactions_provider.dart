@@ -1,99 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
 
 class TransactionsProvider with ChangeNotifier {
-  final _transactions = [
-    Transaction(
-      id: 1,
-      type: "inbound",
-      itemId: 2,
-      quantity: 1,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 2,
-      type: "outbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 1,
-      type: "inbound",
-      itemId: 1,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 2,
-      type: "outbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-    Transaction(
-      id: 3,
-      type: "inbound",
-      itemId: 2,
-      quantity: 45,
-      date: "20/01/2022",
-    ),
-  ];
+  final box = Hive.box("transactionsBox");
+  List<Transaction> get transactions => box.values.toList().cast();
+  Future<void> addTransaction({
+    required String type,
+    required Item item,
+    required int quantity,
+    required String date,
+  }) async {
+    //add dummy data to reserve a key to be used for the item as id
+    int id = await box.add("");
+    Transaction transaction = Transaction(
+      id: id,
+      type: type,
+      item: item,
+      quantity: quantity,
+      date: date,
+    );
+    await box.put(id, transaction);
+    notifyListeners();
+  }
 
-  List<Transaction> get transactions => [..._transactions];
+  Transaction? getTransaction(int id) {
+    return box.get(id);
+  }
 
-  void popTransaction() {
-    if (_transactions.isEmpty) return;
-    _transactions.removeLast();
+  Future<void> deleteTransaction(int id) async {
+    await box.delete(id);
+    notifyListeners();
+  }
+
+  Future<void> deleteAll() async {
+    await box.clear();
     notifyListeners();
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
-import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
 import 'package:sary_assessment/screens/transactions/transaction_details_screen.dart';
 
@@ -15,14 +14,11 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Item item = items.firstWhere(
-      (element) => element.id == transaction.itemId,
-    );
     String stockStatus =
         transaction.type == "inbound" ? "Stock In" : "Stock Out";
     String stockIconPath = transaction.type == "inbound"
-        ? "assets/icons/arrow_up.svg"
-        : "assets/icons/arrow_down.svg";
+        ? "assets/icons/arrow_down.svg"
+        : "assets/icons/arrow_up.svg";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -44,7 +40,7 @@ class TransactionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.name,
+                  transaction.item.name,
                   style: const TextStyle(
                     color: xHeadingFontColor,
                     fontSize: 14,
@@ -52,7 +48,7 @@ class TransactionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 7),
                 Text(
-                  item.sku,
+                  transaction.item.sku,
                   style: const TextStyle(
                     color: xnormalFontColor,
                     fontSize: 12,
@@ -60,7 +56,7 @@ class TransactionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  item.description,
+                  transaction.item.description,
                   style: const TextStyle(
                     color: xnormalFontColor,
                     fontSize: 12,
@@ -68,7 +64,7 @@ class TransactionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  "${item.price} SR",
+                  "${transaction.item.price} SR",
                   style: const TextStyle(
                       color: xHeadingFontColor,
                       fontSize: 11.53,

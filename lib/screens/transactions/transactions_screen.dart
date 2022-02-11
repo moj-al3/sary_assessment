@@ -1,10 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 import 'package:sary_assessment/screens/items/items_screen.dart';
 import 'package:sary_assessment/screens/transactions/components/components.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class TransactionsScreen extends StatelessWidget {
   const TransactionsScreen({Key? key}) : super(key: key);
@@ -44,15 +47,25 @@ class TransactionsScreen extends StatelessWidget {
               const SearchArea(),
               const SizedBox(height: 5),
               Expanded(
-                child: Consumer<TransactionsProvider>(
-                  builder: (context, transactionsProvider, child) =>
-                      ListView.builder(
-                    itemCount: transactionsProvider.transactions.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        TransactionCard(
-                      transaction: transactionsProvider.transactions[index],
-                    ),
-                  ),
+                child: FutureBuilder<Directory>(
+                  future: syspaths.getApplicationDocumentsDirectory(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return Consumer<TransactionsProvider>(
+                        builder: (context, transactionsProvider, child) =>
+                            ListView.builder(
+                          itemCount: transactionsProvider.transactions.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              TransactionCard(
+                            transaction:
+                                transactionsProvider.transactions[index],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const LoadingWidget();
+                    }
+                  },
                 ),
               )
             ],
