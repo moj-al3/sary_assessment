@@ -16,7 +16,7 @@ class AddItemDialog extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text('Add New Item'),
+        title: const Text('New Item'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -42,70 +42,73 @@ class AddItemDialog extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              CustomImageInput(
-                onImageSelect: (fileName) => selectedFileName = fileName,
-              ),
-              CustomTextFormField(
-                label: 'Sku',
-                onSave: (value) {
-                  sku = value;
-                },
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return "Required";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              CustomTextFormField(
-                label: 'Name',
-                onSave: (value) {
-                  name = value;
-                },
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return "Required";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              CustomTextFormField(
-                label: 'Description',
-                onSave: (String value) {
-                  description = value;
-                },
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return "Required";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              CustomTextFormField(
-                label: 'Price',
-                onSave: (String value) {
-                  price = double.parse(value);
-                },
-                validator: (String value) {
-                  if (value.isEmpty) return "Required";
-                  if (double.tryParse(value) == null) {
-                    return "Only numbers are accepted";
-                  }
-                  return null;
-                },
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomImageInput(
+                  onImageSelect: (fileName) => selectedFileName = fileName,
+                ),
+                CustomTextFormField(
+                  label: 'Sku',
+                  onSave: (value) {
+                    sku = value;
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                CustomTextFormField(
+                  label: 'Name',
+                  onSave: (value) {
+                    name = value;
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                CustomTextFormField(
+                  label: 'Description',
+                  onSave: (String value) {
+                    description = value;
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                CustomTextFormField(
+                  label: 'Price',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onSave: (String value) {
+                    price = double.parse(value);
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) return "Required";
+                    if (double.tryParse(value) == null) {
+                      return "Only numbers are accepted";
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

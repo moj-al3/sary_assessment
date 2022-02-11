@@ -21,7 +21,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       type: fields[1] as String,
       item: fields[2] as Item,
       quantity: fields[3] as int,
-      date: fields[4] as String,
+      date: fields[4] as DateTime,
     );
   }
 

@@ -53,12 +53,8 @@ class _CustomDropDownFormFieldState<T>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(
-          widget.label,
-          fontSize: 14,
-          color: Colors.grey.shade900,
-        ),
         DropdownButtonFormField<T>(
+          decoration: InputDecoration(label: Text(widget.label)),
           hint: const Text("Please Select Item"),
           validator: (str) => widget.validator(str),
           onSaved: (item) => widget.onSave(item),

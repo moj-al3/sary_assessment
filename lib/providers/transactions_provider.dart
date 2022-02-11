@@ -10,7 +10,7 @@ class TransactionsProvider with ChangeNotifier {
     required String type,
     required Item item,
     required int quantity,
-    required String date,
+    required DateTime date,
   }) async {
     //add dummy data to reserve a key to be used for the item as id
     int id = await box.add("");

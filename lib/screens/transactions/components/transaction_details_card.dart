@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
@@ -88,14 +89,14 @@ class TransactionDetailsCard extends StatelessWidget {
                 children: [
                   Badge(
                     title: "Date",
-                    value: transaction.date,
+                    value: DateFormat('yyyy-MM-dd').format(transaction.date),
                   ),
                   const SizedBox(
                     width: 24,
                   ),
                   Badge(
                     title: "Time",
-                    value: transaction.date,
+                    value: DateFormat('hh:mm a').format(transaction.date),
                   ),
                 ],
               ),

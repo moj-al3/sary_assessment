@@ -17,6 +17,7 @@ class AddTransactionDialog extends StatelessWidget {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     int quantity = 0;
     Item? selectedItem;
+    DateTime? selectedDate;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -33,7 +34,7 @@ class AddTransactionDialog extends StatelessWidget {
                   type: type,
                   item: selectedItem!,
                   quantity: quantity,
-                  date: "date",
+                  date: selectedDate!,
                 );
                 Navigator.pop(context);
               }
@@ -46,37 +47,40 @@ class AddTransactionDialog extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              CustomDropDownFormField<Item>(
-                label: "Item",
-                list: Provider.of<ItemsProvider>(context).items,
-                mapper: (item) => item.name,
-                onSave: (value) {
-                  selectedItem = value;
-                },
-                validator: (value) {
-                  if (value == null) return "required";
-                  return null;
-                },
-              ),
-              CustomTextFormField(
-                label: 'Quantity',
-                onSave: (String value) {
-                  quantity = int.parse(value);
-                },
-                validator: (String value) {
-                  if (value.isEmpty) return "Required";
-                  if (int.tryParse(value) == null) {
-                    return "Only Whole numbers are accepted";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomDropDownFormField<Item>(
+                  label: "Item",
+                  list: Provider.of<ItemsProvider>(context).items,
+                  mapper: (item) => item.name,
+                  onSave: (value) {
+                    selectedItem = value;
+                  },
+                  validator: (value) {
+                    if (value == null) return "required";
+                    return null;
+                  },
+                ),
+                CustomTextFormField(
+                  label: 'Quantity',
+                  keyboardType: TextInputType.number,
+                  onSave: (String value) {
+                    quantity = int.parse(value);
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) return "Required";
+                    if (int.tryParse(value) == null) {
+                      return "Only Whole numbers are accepted";
+                    }
+                    return null;
+                  },
+                ),
+                CustomDateInput(onSave: (value) {
+                  selectedDate = value;
+                })
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/models/transaction.dart';
@@ -91,7 +92,7 @@ class TransactionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 29),
                 Text(
-                  transaction.date,
+                  DateFormat('yyyy-MM-dd').format(transaction.date),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     color: xnormalFontColor,

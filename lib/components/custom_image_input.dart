@@ -33,33 +33,23 @@ class _CustomImageInputState extends State<CustomImageInput> {
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        child: CompanyImageHolder(
-          fileImage: selectedImage,
-        ),
+        child: selectedImage != null
+            ? Image.file(
+                selectedImage!,
+                fit: BoxFit.fill,
+                width: 250,
+                height: 150,
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: const Center(child: Text("Tap here to pick an image")),
+                width: 250,
+                height: 150,
+              ),
         onTap: _pickImage,
       ),
     );
-  }
-}
-
-class CompanyImageHolder extends StatelessWidget {
-  final File? fileImage;
-  const CompanyImageHolder({
-    Key? key,
-    this.fileImage,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return fileImage != null
-        ? CircleAvatar(
-            radius: 75,
-            backgroundColor: Colors.grey,
-            backgroundImage: FileImage(fileImage!, scale: 0.1),
-          )
-        : const CircleAvatar(
-            radius: 75,
-            backgroundColor: Colors.grey,
-          );
   }
 }

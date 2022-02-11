@@ -14,7 +14,7 @@ class Transaction {
   @HiveField(3)
   final int quantity;
   @HiveField(4)
-  final String date;
+  final DateTime date;
 
   Transaction({
     required this.id,
