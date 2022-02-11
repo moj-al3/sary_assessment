@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/constants.dart';
+import 'package:sary_assessment/core/util/custom_toast.dart';
 import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
+import 'package:sary_assessment/screens/items/items_screen.dart';
+import 'package:sary_assessment/screens/transactions/transactions_screen.dart';
 
 class ItemCard extends StatelessWidget {
   final String appPath;
@@ -19,6 +22,7 @@ class ItemCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: Dismissible(
         confirmDismiss: (direction) => deleteItem(context),
+        onDismissed: (diraction) {},
         background: Container(
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -53,6 +57,7 @@ class ItemCard extends StatelessWidget {
                   "$appPath/${item.image}",
                   width: 125,
                   height: 75,
+                  fit: BoxFit.fill,
                 ),
                 const SizedBox(
                   width: 16,
@@ -125,6 +130,13 @@ class ItemCard extends StatelessWidget {
             onPressed: () async {
               await Provider.of<ItemsProvider>(context, listen: false)
                   .deleteItem(item.id);
+              CustomToast.showToast(
+                context,
+                msg: "Item Deleted",
+                duration: const Duration(seconds: 3),
+                textColor: Colors.white,
+                backgroundColor: Colors.red,
+              );
               Navigator.pop(context, true);
             },
             child: const Text('Yes'),

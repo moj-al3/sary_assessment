@@ -5,6 +5,7 @@ import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
+import 'package:sary_assessment/screens/items/items_screen.dart';
 import 'screens/transactions/transactions_screen.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
@@ -22,7 +23,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Sary Assessment',
         theme: ThemeData(fontFamily: 'Futura'),
-        home: const TransactionsScreen(),
+        home: const ItemsScreen(),
       ),
     );
   }

@@ -9,9 +9,14 @@ import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/screens/items/components/components.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
-class ItemsScreen extends StatelessWidget {
+class ItemsScreen extends StatefulWidget {
   const ItemsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ItemsScreen> createState() => ItemsScreenState();
+}
+
+class ItemsScreenState extends State<ItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

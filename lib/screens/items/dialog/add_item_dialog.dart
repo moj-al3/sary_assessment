@@ -31,7 +31,7 @@ class AddItemDialog extends StatelessWidget {
                   imagePath: selectedFileName,
                   price: price,
                 );
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               }
             },
             icon: const Icon(Icons.save),
@@ -95,7 +95,8 @@ class AddItemDialog extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   label: 'Price',
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   onSave: (String value) {
                     price = double.parse(value);
                   },

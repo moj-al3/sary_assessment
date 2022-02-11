@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/core/util/custom_toast.dart';
 import 'package:sary_assessment/screens/items/dialog/add_item_dialog.dart';
 
 class FloatingArea extends StatelessWidget {
@@ -24,12 +25,21 @@ class FloatingArea extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  Navigator.of(context).push(
+                  var result = await Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const AddItemDialog(),
-                        fullscreenDialog: true),
+                      builder: (BuildContext context) => const AddItemDialog(),
+                      fullscreenDialog: true,
+                    ),
                   );
+                  if (result == true) {
+                    CustomToast.showToast(
+                      context,
+                      msg: "Item added",
+                      duration: const Duration(seconds: 3),
+                      textColor: Colors.white,
+                      backgroundColor: Colors.green,
+                    );
+                  }
                 },
               ),
             ),
