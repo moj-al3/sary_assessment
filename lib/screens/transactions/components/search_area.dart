@@ -5,8 +5,10 @@ import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 
 class SearchArea extends StatelessWidget {
+  final Function(String) onChanged;
   const SearchArea({
     Key? key,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class SearchArea extends StatelessWidget {
                     ),
                     hintText: "Search",
                   ),
+                  onChanged: onChanged,
                 ),
               ),
             ),

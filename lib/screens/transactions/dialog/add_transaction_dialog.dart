@@ -36,7 +36,7 @@ class AddTransactionDialog extends StatelessWidget {
                   quantity: quantity,
                   date: selectedDate!,
                 );
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               }
             },
             icon: const Icon(Icons.save),

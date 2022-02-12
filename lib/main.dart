@@ -5,9 +5,8 @@ import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/models/transaction.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
-import 'package:sary_assessment/screens/items/items_screen.dart';
-import 'screens/transactions/transactions_screen.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
+import 'package:sary_assessment/screens/transactions/transactions_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Sary Assessment',
         theme: ThemeData(fontFamily: 'Futura'),
-        home: const ItemsScreen(),
+        home: const TransactionsScreen(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/core/util/custom_toast.dart';
 import 'package:sary_assessment/screens/transactions/dialog/add_transaction_dialog.dart';
 
 class FloatingArea extends StatelessWidget {
@@ -24,15 +25,25 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_up.svg",
                   color: Colors.white,
                 ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const AddTransactionDialog(
-                      type: "outbound",
+                onPressed: () async {
+                  var result = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const AddTransactionDialog(
+                        type: "inbound",
+                      ),
+                      fullscreenDialog: true,
                     ),
-                    fullscreenDialog: true,
-                  ),
-                ),
+                  );
+                  if (result == true) {
+                    CustomToast.showToast(
+                      context,
+                      msg: "Transaction added!",
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: Colors.green,
+                    );
+                  }
+                },
               ),
             ),
             const SizedBox(width: 10),
@@ -43,15 +54,25 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_down.svg",
                   color: Colors.white,
                 ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const AddTransactionDialog(
-                      type: "inbound",
+                onPressed: () async {
+                  var result = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const AddTransactionDialog(
+                        type: "inbound",
+                      ),
+                      fullscreenDialog: true,
                     ),
-                    fullscreenDialog: true,
-                  ),
-                ),
+                  );
+                  if (result == true) {
+                    CustomToast.showToast(
+                      context,
+                      msg: "Transaction added!",
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: Colors.green,
+                    );
+                  }
+                },
               ),
             ),
           ],

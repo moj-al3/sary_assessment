@@ -38,4 +38,16 @@ class TransactionsProvider with ChangeNotifier {
     await box.clear();
     notifyListeners();
   }
+
+  List<Transaction> getFilterd({required String query}) {
+    if (query.isEmpty) {
+      return transactions;
+    } else {
+      return transactions.where((element) {
+        final elementLower = element.item.name.toLowerCase();
+        final queryLower = query.toLowerCase();
+        return elementLower.contains(queryLower);
+      }).toList();
+    }
+  }
 }
