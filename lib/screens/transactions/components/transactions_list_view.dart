@@ -5,10 +5,8 @@ import 'package:sary_assessment/providers/transactions_provider.dart';
 import 'package:sary_assessment/screens/transactions/components/components.dart';
 
 class TransactionsListView extends StatelessWidget {
-  final String query;
   const TransactionsListView({
     Key? key,
-    required this.query,
   }) : super(key: key);
 
   @override

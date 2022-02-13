@@ -5,3 +5,4 @@ export 'transaction_card.dart';
 export 'transaction_details_card.dart';
 export 'transactions_list_view.dart';
 export 'filters_menu.dart';
+export 'filters_button.dart';

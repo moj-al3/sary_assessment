@@ -25,25 +25,8 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_up.svg",
                   color: Colors.white,
                 ),
-                onPressed: () async {
-                  var result = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const AddTransactionDialog(
-                        type: "outbound",
-                      ),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                  if (result == true) {
-                    CustomToast.showToast(
-                      context,
-                      msg: "Transaction added!",
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: Colors.green,
-                    );
-                  }
-                },
+                onPressed: () async =>
+                    await openAddTransactionDialog(context, "outbound"),
               ),
             ),
             const SizedBox(width: 10),
@@ -54,30 +37,33 @@ class FloatingArea extends StatelessWidget {
                   "assets/icons/arrow_down.svg",
                   color: Colors.white,
                 ),
-                onPressed: () async {
-                  var result = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const AddTransactionDialog(
-                        type: "inbound",
-                      ),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                  if (result == true) {
-                    CustomToast.showToast(
-                      context,
-                      msg: "Transaction added!",
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: Colors.green,
-                    );
-                  }
-                },
+                onPressed: () async =>
+                    await openAddTransactionDialog(context, "inbound"),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> openAddTransactionDialog(
+      BuildContext context, String type) async {
+    var result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => AddTransactionDialog(
+          type: type,
+        ),
+        fullscreenDialog: true,
+      ),
+    );
+    if (result == true) {
+      CustomToast.showToast(
+        context,
+        msg: "Transaction added!",
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.green,
+      );
+    }
   }
 }

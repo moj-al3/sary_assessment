@@ -18,15 +18,20 @@ class CustomImageInput extends StatefulWidget {
 class _CustomImageInputState extends State<CustomImageInput> {
   File? selectedImage;
   Future<void> _pickImage() async {
+    //wait for the user to pick the image
     final XFile? imageFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+    //in case he did not pick any image then stop and return
     if (imageFile == null) return;
     selectedImage = File(imageFile.path);
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
+    //make a copy of the picked image to save it from the temp folder
     await selectedImage!.copy('${appDir.path}/$fileName');
-    setState(() {});
+    //pass the name of the saved image to the outside
     widget.onImageSelect(fileName);
+
+    setState(() {});
   }
 
   @override

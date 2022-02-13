@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
-import 'package:sary_assessment/constants.dart';
-import 'package:sary_assessment/core/util/validators.dart';
+import 'package:sary_assessment/core/util/input_validator.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 
 class FiltersMenu extends StatelessWidget {
@@ -52,8 +51,8 @@ class FiltersMenu extends StatelessWidget {
               initialValue: filters["quantity"] != null
                   ? filters["quantity"].toString()
                   : "",
-              validator: Validators.isNumber,
-              onSave: (String value) => quantity = int.tryParse(value),
+              validator: InputValidator.isNumber,
+              onSave: (value) => quantity = int.tryParse(value.toString()),
             ),
             CustomDropDownFormField<String>(
               label: "Transaction Type",

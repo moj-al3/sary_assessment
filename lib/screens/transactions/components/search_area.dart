@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
@@ -18,15 +17,15 @@ class _SearchAreaState extends State<SearchArea> {
   final _controller = TextEditingController();
   @override
   void initState() {
+    _controller.addListener(
+      () => Provider.of<TransactionsProvider>(context, listen: false)
+          .updateQuery(_controller.text),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(
-      () => Provider.of<TransactionsProvider>(context, listen: false)
-          .updateQuery(_controller.text),
-    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
@@ -59,40 +58,9 @@ class _SearchAreaState extends State<SearchArea> {
             const SizedBox(
               width: 16,
             ),
-            FilterButton(
-              onPressed: () async {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (_) => FiltersMenu(),
-                );
-              },
-            ),
+            const FilterButton(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class FilterButton extends StatelessWidget {
-  final Function onPressed;
-  const FilterButton({
-    Key? key,
-    required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 25,
-      backgroundColor: Colors.white,
-      child: IconButton(
-        icon: SvgPicture.asset(
-          "assets/icons/filter.svg",
-          width: 25,
-          height: 25,
-        ),
-        onPressed: () => onPressed(),
       ),
     );
   }

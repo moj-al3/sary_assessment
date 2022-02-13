@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
 
 class Badge extends StatelessWidget {
-  final String value;
   final String title;
+  final String value;
+
   const Badge({
     Key? key,
     required this.title,
@@ -15,19 +17,15 @@ class Badge extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustomText(
           value,
-          style: const TextStyle(
-            color: xHeadingFontColor,
-            fontSize: 19,
-            fontWeight: FontWeight.w900,
-          ),
+          color: xHeadingFontColor,
+          fontSize: 19,
+          weight: FontWeight.w900,
         ),
-        Text(
+        CustomText(
           title,
-          style: const TextStyle(
-            fontSize: 16,
-          ),
+          fontSize: 16,
         ),
       ],
     );

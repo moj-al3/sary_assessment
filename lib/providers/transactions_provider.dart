@@ -6,7 +6,6 @@ import 'package:sary_assessment/models/transaction.dart';
 
 class TransactionsProvider with ChangeNotifier {
   final box = Hive.box("transactionsBox");
-  List<Transaction> get transactions => box.values.toList().cast();
 
   Map filters = {
     "quantity": null,
@@ -14,6 +13,8 @@ class TransactionsProvider with ChangeNotifier {
     "date": null,
   };
   String query = "";
+
+  List<Transaction> get transactions => box.values.toList().cast();
 
   void updateFilters(Map newFilters) {
     filters = newFilters;
@@ -61,20 +62,19 @@ class TransactionsProvider with ChangeNotifier {
   List<Transaction> getFilterd() {
     List<Transaction> filterdList = transactions;
 
-    if (filters["quantity"] != null) {
-      filterdList = filterdList
-          .where((element) => element.quantity == filters["quantity"])
-          .toList();
-    }
     if (filters["transactionType"] != null) {
       filterdList = filterdList
           .where((element) => element.type == filters["transactionType"])
           .toList();
     }
-
     if (filters["date"] != null) {
       filterdList = filterdList
           .where((element) => element.date.isSameDate(filters["date"]))
+          .toList();
+    }
+    if (filters["quantity"] != null) {
+      filterdList = filterdList
+          .where((element) => element.quantity == filters["quantity"])
           .toList();
     }
 

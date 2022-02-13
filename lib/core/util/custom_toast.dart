@@ -9,16 +9,10 @@ class CustomToast {
     Color textColor = Colors.white,
     double fontSize = 16,
   }) {
-    WidgetsBinding.instance!.addPostFrameCallback(
-      (_) => _pushOverlay(
-        context,
-        msg,
-        duration,
-        backgroundColor,
-        textColor,
-        fontSize,
-      ),
-    );
+    // WidgetsBinding.instance!.addPostFrameCallback(
+    //   (_) => ,
+    // );
+    _pushOverlay(context, msg, duration, backgroundColor, textColor, fontSize);
   }
 
   static void _pushOverlay(
@@ -29,7 +23,9 @@ class CustomToast {
     Color textColor,
     double fontSize,
   ) {
+    //get the overaly of the current context
     final overlay = Overlay.of(context)!;
+    //create an overlay Entry to add it on top of the current overlay
     final entry = OverlayEntry(
       builder: (context) => Positioned(
         bottom: 120,
@@ -48,7 +44,9 @@ class CustomToast {
         ),
       ),
     );
+
     overlay.insert(entry);
+    //after the vanish animation done remove the entry
     Future.delayed(
       Duration(seconds: (duration.inSeconds + 1)),
       entry.remove,
@@ -77,14 +75,12 @@ class TotastBadge extends StatefulWidget {
 }
 
 class _TotastBadgeState extends State<TotastBadge> {
-  bool _visible = true;
+  double opacity = 1;
 
   @override
   void initState() {
     Future.delayed(widget.duration, () {
-      setState(() {
-        _visible = false;
-      });
+      setState(() => opacity = 0);
     });
     super.initState();
   }
@@ -92,7 +88,7 @@ class _TotastBadgeState extends State<TotastBadge> {
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: _visible ? 1.0 : 0.0,
+      opacity: opacity,
       duration: const Duration(milliseconds: 500),
       child: Container(
         padding: const EdgeInsets.all(8),

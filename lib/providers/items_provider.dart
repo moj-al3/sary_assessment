@@ -4,7 +4,9 @@ import 'package:sary_assessment/models/item.dart';
 
 class ItemsProvider with ChangeNotifier {
   final box = Hive.box("itemsBox");
+
   List<Item> get items => box.values.toList().cast();
+
   Future<void> addItem({
     required String name,
     required String sku,
@@ -40,5 +42,4 @@ class ItemsProvider with ChangeNotifier {
     await box.clear();
     notifyListeners();
   }
-
 }

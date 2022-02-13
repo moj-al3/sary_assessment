@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
-  final Function onTap;
+  final Function()? onTap;
   const CustomCard({
     Key? key,
     required this.child,
-    required this.onTap,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class CustomCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(24),
-          onTap: () => onTap(),
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: child,

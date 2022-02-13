@@ -32,11 +32,8 @@ class _CustomDateInputState extends State<CustomDateInput> {
   DateTime? date;
   @override
   void initState() {
-    if (widget.initialValue != null) {
-      date = widget.initialValue;
-      dateinput.text = formateDate(date);
-    }
-
+    date = widget.initialValue;
+    dateinput.text = formateDate(date);
     super.initState();
   }
 
@@ -54,15 +51,6 @@ class _CustomDateInputState extends State<CustomDateInput> {
     );
   }
 
-  String formateDate(DateTime? dateToFormat) {
-    if (dateToFormat == null) return "";
-    if (widget.includeTime) {
-      return DateFormat('yyyy-MM-dd hh:mm a').format(dateToFormat);
-    } else {
-      return DateFormat('yyyy-MM-dd').format(dateToFormat);
-    }
-  }
-
   Future<void> pickDate() async {
     TimeOfDay? pickedTime;
     DateTime? pickedDate;
@@ -73,7 +61,7 @@ class _CustomDateInputState extends State<CustomDateInput> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-
+    //in case the user canceld picking the date there is no need to continue
     if (pickedDate == null) return;
 
     if (widget.includeTime) {
@@ -83,11 +71,22 @@ class _CustomDateInputState extends State<CustomDateInput> {
       );
       if (pickedTime == null) return;
     }
-
-    date = widget.includeTime
-        ? DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
-            pickedTime!.hour, pickedTime.minute)
-        : pickedDate;
+    //in case the date picker includes time then merge it with the picked date
+    if (widget.includeTime) {
+      date = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
+          pickedTime!.hour, pickedTime.minute);
+    } else {
+      date = pickedDate;
+    }
     setState(() => dateinput.text = formateDate(date));
+  }
+
+  String formateDate(DateTime? dateToFormat) {
+    if (dateToFormat == null) return "";
+    if (widget.includeTime) {
+      return DateFormat('yyyy-MM-dd hh:mm a').format(dateToFormat);
+    } else {
+      return DateFormat('yyyy-MM-dd').format(dateToFormat);
+    }
   }
 }

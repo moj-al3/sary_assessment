@@ -12,7 +12,6 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  String query = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,17 +41,17 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Column(
-            children: [
-              const SizedBox(height: 8),
-              const SearchArea(),
-              const SizedBox(height: 5),
-              Expanded(
-                child: TransactionsListView(
-                  query: query,
-                ),
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              children: const [
+                SearchArea(),
+                SizedBox(height: 5),
+                Expanded(
+                  child: TransactionsListView(),
+                )
+              ],
+            ),
           ),
           const FloatingArea(),
         ],

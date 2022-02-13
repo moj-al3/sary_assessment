@@ -27,10 +27,11 @@ class CustomText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            color: color,
-            height: height,
-            fontSize: fontSize,
-            fontWeight: weight),
+          color: color,
+          height: height,
+          fontSize: fontSize,
+          fontWeight: weight,
+        ),
         maxLines: maxLine,
       ),
     );

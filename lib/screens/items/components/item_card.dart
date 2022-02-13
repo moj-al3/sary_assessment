@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sary_assessment/components/components.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/core/util/custom_toast.dart';
 import 'package:sary_assessment/models/item.dart';
@@ -16,29 +17,28 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const borderRadius = BorderRadius.all(
+      Radius.circular(24),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: Dismissible(
         confirmDismiss: (direction) => deleteItem(context),
         onDismissed: (diraction) {},
         background: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                )
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Icon(
+                Icons.delete,
+                color: Colors.white,
+              )
+            ],
           ),
+          padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
             color: Colors.red,
-            borderRadius: BorderRadius.all(
-              Radius.circular(24),
-            ),
+            borderRadius: borderRadius,
           ),
         ),
         key: Key(item.id.toString()),
@@ -98,9 +98,10 @@ class ItemCard extends StatelessWidget {
                       Text(
                         "${item.price} SR",
                         style: const TextStyle(
-                            color: xHeadingFontColor,
-                            fontSize: 11.53,
-                            fontWeight: FontWeight.w700),
+                          color: xHeadingFontColor,
+                          fontSize: 11.53,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ],
                   ),
@@ -121,10 +122,17 @@ class ItemCard extends StatelessWidget {
         content: const Text("Do you want to delete this item"),
         actions: [
           TextButton(
+            child: const CustomText(
+              'CANCEL',
+              color: Colors.black,
+            ),
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('CANCEL'),
           ),
           TextButton(
+            child: const CustomText(
+              'Yes',
+              color: Colors.red,
+            ),
             onPressed: () async {
               await Provider.of<ItemsProvider>(context, listen: false)
                   .deleteItem(item.id);
@@ -137,7 +145,6 @@ class ItemCard extends StatelessWidget {
               );
               Navigator.pop(context, true);
             },
-            child: const Text('Yes'),
           ),
         ],
       ),

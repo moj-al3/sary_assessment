@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
-import 'package:sary_assessment/core/util/validators.dart';
+import 'package:sary_assessment/core/util/input_validator.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 
 class AddItemDialog extends StatelessWidget {
@@ -39,11 +39,11 @@ class AddItemDialog extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
               children: [
                 CustomImageInput(
@@ -51,24 +51,24 @@ class AddItemDialog extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   label: 'Sku',
-                  validator: Validators.isRequiredText,
-                  onSave: (value) => sku = value,
+                  validator: InputValidator.isRequiredText,
+                  onSave: (value) => sku = value!,
                 ),
                 const SizedBox(
                   height: 6,
                 ),
                 CustomTextFormField(
                   label: 'Name',
-                  validator: Validators.isRequiredText,
-                  onSave: (value) => name = value,
+                  validator: InputValidator.isRequiredText,
+                  onSave: (value) => name = value!,
                 ),
                 const SizedBox(
                   height: 6,
                 ),
                 CustomTextFormField(
                   label: 'Description',
-                  validator: Validators.isRequiredText,
-                  onSave: (value) => description = value,
+                  validator: InputValidator.isRequiredText,
+                  onSave: (value) => description = value!,
                 ),
                 const SizedBox(
                   height: 6,
@@ -77,8 +77,8 @@ class AddItemDialog extends StatelessWidget {
                   label: 'Price',
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  validator: Validators.isRequiredNumber,
-                  onSave: (value) => price = double.parse(value),
+                  validator: InputValidator.isRequiredNumber,
+                  onSave: (value) => price = double.parse(value!),
                 ),
               ],
             ),

@@ -1,14 +1,4 @@
-class Validators {
-  static String? isRequiredNumber(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required";
-    }
-    if (double.tryParse(value) == null) {
-      return "Only numbers are accepted";
-    }
-    return null;
-  }
-
+class InputValidator {
   static String? isNumber(String? value) {
     if (value == null || value.isEmpty) {
       return null;
@@ -19,6 +9,13 @@ class Validators {
     return null;
   }
 
+  static String? isRequiredNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Required";
+    } else {
+      return isNumber(value);
+    }
+  }
 
   static String? isRequiredText(String? value) {
     if (value == null || value.isEmpty) {
@@ -33,5 +30,4 @@ class Validators {
     }
     return null;
   }
-
 }
