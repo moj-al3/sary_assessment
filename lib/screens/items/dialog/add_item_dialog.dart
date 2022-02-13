@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/core/util/validators.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 
 class AddItemDialog extends StatelessWidget {
@@ -16,9 +17,10 @@ class AddItemDialog extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text('New Item'),
+        title: const CustomText('New Item'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.save),
             onPressed: () async {
               if (_formKey.currentState!.validate() &&
                   selectedFileName.isNotEmpty) {
@@ -34,7 +36,6 @@ class AddItemDialog extends StatelessWidget {
                 Navigator.pop(context, true);
               }
             },
-            icon: const Icon(Icons.save),
           )
         ],
       ),
@@ -50,45 +51,24 @@ class AddItemDialog extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   label: 'Sku',
-                  onSave: (value) {
-                    sku = value;
-                  },
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Required";
-                    }
-                    return null;
-                  },
+                  validator: Validators.isRequiredText,
+                  onSave: (value) => sku = value,
                 ),
                 const SizedBox(
                   height: 6,
                 ),
                 CustomTextFormField(
                   label: 'Name',
-                  onSave: (value) {
-                    name = value;
-                  },
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Required";
-                    }
-                    return null;
-                  },
+                  validator: Validators.isRequiredText,
+                  onSave: (value) => name = value,
                 ),
                 const SizedBox(
                   height: 6,
                 ),
                 CustomTextFormField(
                   label: 'Description',
-                  onSave: (String value) {
-                    description = value;
-                  },
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Required";
-                    }
-                    return null;
-                  },
+                  validator: Validators.isRequiredText,
+                  onSave: (value) => description = value,
                 ),
                 const SizedBox(
                   height: 6,
@@ -97,16 +77,8 @@ class AddItemDialog extends StatelessWidget {
                   label: 'Price',
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  onSave: (String value) {
-                    price = double.parse(value);
-                  },
-                  validator: (String value) {
-                    if (value.isEmpty) return "Required";
-                    if (double.tryParse(value) == null) {
-                      return "Only numbers are accepted";
-                    }
-                    return null;
-                  },
+                  validator: Validators.isRequiredNumber,
+                  onSave: (value) => price = double.parse(value),
                 ),
               ],
             ),

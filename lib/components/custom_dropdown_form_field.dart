@@ -5,7 +5,7 @@ class CustomDropDownFormField<T> extends StatefulWidget {
   final String label;
   final Function(T) mapper;
   final Function(T?) onSave;
-  final Function(T?) validator;
+  final String? Function(T?)? validator;
   final int? initalIndex;
   final T? initalObject;
   const CustomDropDownFormField({
@@ -13,7 +13,7 @@ class CustomDropDownFormField<T> extends StatefulWidget {
     required this.label,
     required this.list,
     required this.mapper,
-    required this.validator,
+    this.validator,
     required this.onSave,
     this.initalIndex,
     this.initalObject,
@@ -55,7 +55,7 @@ class _CustomDropDownFormFieldState<T>
         DropdownButtonFormField<T>(
           decoration: InputDecoration(label: Text(widget.label)),
           hint: const Text("Please Select Item"),
-          validator: (str) => widget.validator(str),
+          validator: widget.validator,
           onSaved: (item) => widget.onSave(item),
           isExpanded: true,
           value: currentItem,

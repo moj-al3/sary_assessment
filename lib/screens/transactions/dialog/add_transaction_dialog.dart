@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
+import 'package:sary_assessment/components/custom_text.dart';
+import 'package:sary_assessment/core/util/validators.dart';
 import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
@@ -23,20 +25,22 @@ class AddTransactionDialog extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: Text('New $type Transaction'),
+        title: CustomText('New $type Transaction'),
         actions: [
           IconButton(
-            onPressed: () async {
+            onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                await Provider.of<TransactionsProvider>(context, listen: false)
+                Provider.of<TransactionsProvider>(context, listen: false)
                     .addTransaction(
-                  type: type,
-                  item: selectedItem!,
-                  quantity: quantity,
-                  date: selectedDate!,
-                );
-                Navigator.pop(context, true);
+                      type: type,
+                      item: selectedItem!,
+                      quantity: quantity,
+                      date: selectedDate!,
+                    )
+                    .then(
+                      (value) => Navigator.pop(context, true),
+                    );
               }
             },
             icon: const Icon(Icons.save),
@@ -54,38 +58,19 @@ class AddTransactionDialog extends StatelessWidget {
                   label: "Item",
                   list: Provider.of<ItemsProvider>(context).items,
                   mapper: (item) => item.name,
-                  onSave: (value) {
-                    selectedItem = value;
-                  },
-                  validator: (value) {
-                    if (value == null) return "required";
-                    return null;
-                  },
+                  validator: Validators.isRequiredObject,
+                  onSave: (value) => selectedItem = value,
                 ),
                 CustomTextFormField(
                   label: 'Quantity',
                   keyboardType: TextInputType.number,
-                  onSave: (String value) {
-                    quantity = int.parse(value);
-                  },
-                  validator: (String value) {
-                    if (value.isEmpty) return "Required";
-                    if (int.tryParse(value) == null) {
-                      return "Only Whole numbers are accepted";
-                    }
-                    return null;
-                  },
+                  validator: Validators.isRequiredNumber,
+                  onSave: (String value) => quantity = int.parse(value),
                 ),
                 CustomDateInput(
                   includeTime: true,
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty)
-                      return "Please Pick a Date";
-                    return null;
-                  },
-                  onSave: (value) {
-                    selectedDate = value;
-                  },
+                  validator: Validators.isRequiredObject,
+                  onSave: (value) => selectedDate = value,
                 )
               ],
             ),

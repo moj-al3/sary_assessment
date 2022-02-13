@@ -9,7 +9,7 @@ class CustomDateInput extends StatefulWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final bool includeTime;
-  final Function validator;
+  final String? Function(String?)? validator;
 
   const CustomDateInput({
     Key? key,
@@ -19,7 +19,7 @@ class CustomDateInput extends StatefulWidget {
     this.controller,
     this.keyboardType,
     this.includeTime = false,
-    required this.validator,
+    this.validator,
     required this.onSave,
   }) : super(key: key);
 
@@ -50,7 +50,7 @@ class _CustomDateInputState extends State<CustomDateInput> {
       readOnly: true,
       onTap: pickDate,
       onSaved: (value) => widget.onSave(date),
-      validator: (value) => widget.validator(value),
+      validator: widget.validator,
     );
   }
 

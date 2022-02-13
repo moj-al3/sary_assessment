@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/components/components.dart';
-import 'package:sary_assessment/components/custom_text.dart';
 import 'package:sary_assessment/constants.dart';
+import 'package:sary_assessment/core/util/validators.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
 
 class FiltersMenu extends StatelessWidget {
@@ -52,26 +52,18 @@ class FiltersMenu extends StatelessWidget {
               initialValue: filters["quantity"] != null
                   ? filters["quantity"].toString()
                   : "",
-              onSave: (String value) =>
-                  {if (value.isNotEmpty) quantity = int.parse(value)},
-              validator: (value) {
-                if (value.isNotEmpty && int.tryParse(value) == null) {
-                  return "Only Whole numbers are accepted";
-                }
-                return null;
-              },
+              validator: Validators.isNumber,
+              onSave: (String value) => quantity = int.tryParse(value),
             ),
             CustomDropDownFormField<String>(
               label: "Transaction Type",
               list: const ["inbound", "outbound"],
               mapper: (type) => type,
               initalObject: filters["transactionType"],
-              validator: (_) => null,
               onSave: (value) => transactionType = value!,
             ),
             CustomDateInput(
               initialValue: filters["date"],
-              validator: (value) => null,
               onSave: (date) => selectedDate = date,
             ),
             const SizedBox(
@@ -80,24 +72,9 @@ class FiltersMenu extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(xprimaryColor),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 15),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Apply",
-                    style: TextStyle(fontSize: 24, color: Colors.white),
-                  ),
-                  onPressed: () {
+                CustomButton(
+                  text: "Apply",
+                  onPress: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       Provider.of<TransactionsProvider>(context, listen: false)
@@ -109,7 +86,7 @@ class FiltersMenu extends StatelessWidget {
                       Navigator.pop(context);
                     }
                   },
-                )
+                ),
               ],
             ),
           ],
