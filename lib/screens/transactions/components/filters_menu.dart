@@ -59,7 +59,7 @@ class FiltersMenu extends StatelessWidget {
               list: const ["inbound", "outbound"],
               mapper: (type) => type,
               initalObject: filters["transactionType"],
-              onSave: (value) => transactionType = value!,
+              onSave: (value) => transactionType = value,
             ),
             CustomDateInput(
               initialValue: filters["date"],
