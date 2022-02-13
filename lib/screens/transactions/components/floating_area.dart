@@ -30,7 +30,7 @@ class FloatingArea extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
                           const AddTransactionDialog(
-                        type: "inbound",
+                        type: "outbound",
                       ),
                       fullscreenDialog: true,
                     ),

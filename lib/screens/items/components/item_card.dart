@@ -4,8 +4,6 @@ import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/core/util/custom_toast.dart';
 import 'package:sary_assessment/models/item.dart';
 import 'package:sary_assessment/providers/items_provider.dart';
-import 'package:sary_assessment/screens/items/items_screen.dart';
-import 'package:sary_assessment/screens/transactions/transactions_screen.dart';
 
 class ItemCard extends StatelessWidget {
   final String appPath;

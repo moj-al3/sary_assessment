@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sary_assessment/components/custom_text.dart';
 
 class CustomDropDownFormField<T> extends StatefulWidget {
   final List<T> list;

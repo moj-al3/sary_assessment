@@ -51,7 +51,7 @@ class CustomToast {
     overlay.insert(entry);
     Future.delayed(
       Duration(seconds: (duration.inSeconds + 1)),
-      () => entry.remove,
+      entry.remove,
     );
   }
 }

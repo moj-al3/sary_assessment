@@ -5,17 +5,16 @@ import 'package:sary_assessment/providers/transactions_provider.dart';
 import 'package:sary_assessment/screens/transactions/components/components.dart';
 
 class TransactionsListView extends StatelessWidget {
+  final String query;
   const TransactionsListView({
     Key? key,
     required this.query,
   }) : super(key: key);
 
-  final String query;
-
   @override
   Widget build(BuildContext context) {
     List<Transaction> filterdTransactions =
-        Provider.of<TransactionsProvider>(context).getFilterd(query: query);
+        Provider.of<TransactionsProvider>(context).getFilterd();
     return ListView.builder(
       itemCount: filterdTransactions.length,
       itemBuilder: (BuildContext context, int index) => TransactionCard(

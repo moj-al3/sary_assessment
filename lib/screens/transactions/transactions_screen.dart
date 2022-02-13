@@ -13,7 +13,6 @@ class TransactionsScreen extends StatefulWidget {
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
   String query = "";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +45,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           Column(
             children: [
               const SizedBox(height: 8),
-              SearchArea(
-                onChanged: (text) => setState(
-                  () {
-                    query = text;
-                  },
-                ),
-              ),
+              const SearchArea(),
               const SizedBox(height: 5),
               Expanded(
                 child: TransactionsListView(

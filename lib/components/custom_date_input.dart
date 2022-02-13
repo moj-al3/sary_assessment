@@ -4,10 +4,12 @@ import 'package:intl/intl.dart';
 class CustomDateInput extends StatefulWidget {
   final String? label;
   final TextAlign? fieldTextAlign;
-  final String? initialValue;
+  final DateTime? initialValue;
   final Function onSave;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final bool includeTime;
+  final Function validator;
 
   const CustomDateInput({
     Key? key,
@@ -16,6 +18,8 @@ class CustomDateInput extends StatefulWidget {
     this.initialValue,
     this.controller,
     this.keyboardType,
+    this.includeTime = false,
+    required this.validator,
     required this.onSave,
   }) : super(key: key);
 
@@ -28,7 +32,11 @@ class _CustomDateInputState extends State<CustomDateInput> {
   DateTime? date;
   @override
   void initState() {
-    dateinput.text = "";
+    if (widget.initialValue != null) {
+      date = widget.initialValue;
+      dateinput.text = formateDate(date);
+    }
+
     super.initState();
   }
 
@@ -42,11 +50,17 @@ class _CustomDateInputState extends State<CustomDateInput> {
       readOnly: true,
       onTap: pickDate,
       onSaved: (value) => widget.onSave(date),
-      validator: (String? value) {
-        if (value == null || value.isEmpty) return "Please Pick a Date";
-        return null;
-      },
+      validator: (value) => widget.validator(value),
     );
+  }
+
+  String formateDate(DateTime? dateToFormat) {
+    if (dateToFormat == null) return "";
+    if (widget.includeTime) {
+      return DateFormat('yyyy-MM-dd hh:mm a').format(dateToFormat);
+    } else {
+      return DateFormat('yyyy-MM-dd').format(dateToFormat);
+    }
   }
 
   Future<void> pickDate() async {
@@ -59,24 +73,21 @@ class _CustomDateInputState extends State<CustomDateInput> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (pickedDate != null) {
+
+    if (pickedDate == null) return;
+
+    if (widget.includeTime) {
       pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
       );
+      if (pickedTime == null) return;
     }
-    if (pickedDate != null && pickedTime != null) {
-      date = pickedDate = DateTime(pickedDate.year, pickedDate.month,
-          pickedDate.day, pickedTime.hour, pickedTime.minute);
-      String formattedDate = DateFormat('yyyy-MM-dd hh:mm a').format(date!);
-      setState(() {
-        dateinput.text = formattedDate;
-      });
-    } else {
-      date = null;
-      setState(() {
-        dateinput.text = "";
-      });
-    }
+
+    date = widget.includeTime
+        ? DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
+            pickedTime!.hour, pickedTime.minute)
+        : pickedDate;
+    setState(() => dateinput.text = formateDate(date));
   }
 }

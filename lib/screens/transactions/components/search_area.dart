@@ -3,16 +3,30 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sary_assessment/constants.dart';
 import 'package:sary_assessment/providers/transactions_provider.dart';
+import 'package:sary_assessment/screens/transactions/components/components.dart';
 
-class SearchArea extends StatelessWidget {
-  final Function(String) onChanged;
+class SearchArea extends StatefulWidget {
   const SearchArea({
     Key? key,
-    required this.onChanged,
   }) : super(key: key);
 
   @override
+  State<SearchArea> createState() => _SearchAreaState();
+}
+
+class _SearchAreaState extends State<SearchArea> {
+  final _controller = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _controller.addListener(
+      () => Provider.of<TransactionsProvider>(context, listen: false)
+          .updateQuery(_controller.text),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
@@ -25,15 +39,20 @@ class SearchArea extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: TextFormField(
-                  decoration: const InputDecoration(
+                  controller: _controller,
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.search,
                       color: xHeadingFontColor,
                     ),
+                    suffixIcon: IconButton(
+                      color: Colors.black,
+                      onPressed: _controller.clear,
+                      icon: const Icon(Icons.clear),
+                    ),
                     hintText: "Search",
                   ),
-                  onChanged: onChanged,
                 ),
               ),
             ),
@@ -42,8 +61,10 @@ class SearchArea extends StatelessWidget {
             ),
             FilterButton(
               onPressed: () async {
-                await Provider.of<TransactionsProvider>(context, listen: false)
-                    .deleteAll();
+                showModalBottomSheet(
+                  context: context,
+                  builder: (_) => FiltersMenu(),
+                );
               },
             ),
           ],

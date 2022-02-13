@@ -76,9 +76,17 @@ class AddTransactionDialog extends StatelessWidget {
                     return null;
                   },
                 ),
-                CustomDateInput(onSave: (value) {
-                  selectedDate = value;
-                })
+                CustomDateInput(
+                  includeTime: true,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty)
+                      return "Please Pick a Date";
+                    return null;
+                  },
+                  onSave: (value) {
+                    selectedDate = value;
+                  },
+                )
               ],
             ),
           ),
