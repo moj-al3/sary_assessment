@@ -25,7 +25,7 @@ Go to project root and execute the following command in console to get the requi
 This project uses `hive` library that works with code generation, execute the following command to generate files:
 
 ```
-> flutter packages pub run build_runner build
+> flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
 
 **Step 4:**
